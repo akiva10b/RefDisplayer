@@ -111,7 +111,6 @@ class SefariaPlugin extends HTMLElement {
 
     this.container.appendChild(list);
 
-    // Add event listener to the h1 title
     const titleElement = this.shadowRoot.querySelector('#title');
     titleElement.addEventListener('click', () => {
       this.dispatchEvent(new CustomEvent('scrollToRef', {
@@ -129,7 +128,7 @@ class SefariaPlugin extends HTMLElement {
   }
 
   renderPlayer() {
-    this.container.innerHTML = ''; // Clear previous content
+    this.container.innerHTML = '';
 
     // Back Button
     const backButton = document.createElement('a');
