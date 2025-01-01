@@ -6,16 +6,42 @@
     <title>RefDisplayer</title>
     <script type="module" src="{{ url_for('static', filename='plugin.js') }}"></script>
 
-    <script>
-        const updateSref = () => {
-            sref = document.querySelector('#sref').value;
-            document.querySelector('sefaria-plugin').setAttribute('sref', sref);
-        }
-    </script>
 </head>
 <body>
-    <input type="text" id="sref" placeholder="Genesis 1.1">
-    <button onclick="updateSref()">Update</button>
+    <div style="display: flex; gap: 8px;">
+        <input type="text" id="sref" placeholder="Genesis 1.1">
+        <button onclick="updateSref()">Update</button>
+        <div>
+            Events:
+        </div>
+        <div style="height: 40px; border: solid; overflow: auto;" id="events">
+            
+        </div>
+    </div>
     <sefaria-plugin sref="Genesis 1.1"></sefaria-plugin>
+
+    <script>
+        const SEFARIA_PLUGIN = 'sefaria-plugin';
+        const updateSref = () => {
+            sref = document.querySelector('#sref').value;
+            document.querySelector(SEFARIA_PLUGIN).setAttribute('sref', sref);
+        }
+
+        const updateEventLog = (value) => {
+            const eventCount = document.querySelectorAll('.eventCount').length + 1;
+            const eventsDiv = document.querySelector('#events');
+            eventsDiv.innerHTML = `<div class='eventCount'>${eventCount}. ${value}</div>` + eventsDiv.innerHTML;
+        }
+
+        const addEventListenerToPlugin = (target) => {
+            const pluginElement = document.querySelector(target);
+            if (pluginElement) {
+            pluginElement.addEventListener('scrollToRef', (event) => {
+                updateEventLog(`scrollToRef(${event.detail.sref})`);
+            });
+            }
+        };
+        addEventListenerToPlugin(SEFARIA_PLUGIN)
+    </script>
 </body>
 </html>

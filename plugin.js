@@ -91,7 +91,7 @@ class SefariaPlugin extends HTMLElement {
       this.container.innerHTML = '<p>No results found.</p>';
       return;
     } else {
-      this.container.innerHTML = `<h1>YUTorah on ${query}</h1>`;
+      this.container.innerHTML = `<h1 id="title">YUTorah on ${query}</h1>`;
     }
 
     const list = document.createElement('ul');
@@ -110,6 +110,16 @@ class SefariaPlugin extends HTMLElement {
     });
 
     this.container.appendChild(list);
+
+    // Add event listener to the h1 title
+    const titleElement = this.shadowRoot.querySelector('#title');
+    titleElement.addEventListener('click', () => {
+      this.dispatchEvent(new CustomEvent('scrollToRef', {
+        detail: { sref: query },
+        bubbles: true,
+        composed: true
+      }));
+    });
   }
 
   playLecture(doc) {
