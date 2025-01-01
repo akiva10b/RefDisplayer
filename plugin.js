@@ -1,9 +1,9 @@
 // Sefaria events
 
 // Custom event to scroll to a specific Sefaria ref in the reader. Ref must be in view.
-const scrollToRef = (element, query) => {
+const scrollToRef = (element, sref) => {
   element.dispatchEvent(new CustomEvent('scrollToRef', {
-    detail: { sref: query },
+    detail: { sref: sref },
     bubbles: true,
     composed: true
   }));
